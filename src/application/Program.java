@@ -12,21 +12,21 @@ public class Program {
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-
-        System.out.print("Nome do cliente: ");
-        String nome = sc.nextLine();
-        System.out.print("Senha: ");
-        String senha = sc.nextLine();
-        System.out.print("Email: ");
-        String email = sc.nextLine();
-        System.out.print("Celular: ");
-        String cel = sc.nextLine();
-
-        Client cliente = new Client(nome,senha,email,cel);
-
-
         List<Client> clients = new ArrayList<>();
-        System.out.print(cliente);
+
+        String nome = "Lenilson";
+        String senha = "1234";
+        String email = "lenilson@gmail.com";
+        String cel = "27-996293991";
+
+        Client cliente = new Client(nome, senha, email, cel);
+        clients.add(cliente);
+        String nome1 = "Lenilson";
+        String senha1 = "1235";
+
+        cliente.valLogin(nome1,senha1);
+
+
 
         sc.close();
     }

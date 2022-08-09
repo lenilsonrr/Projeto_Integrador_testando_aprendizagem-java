@@ -9,9 +9,9 @@ public class Client {
     public Client() {
     }
 
-    public Client(String nome, String cpf, String email, String cel) {
+    public Client(String nome, String senha, String email, String cel) {
         this.nome = nome;
-        this.senha = cpf;
+        this.senha = senha;
         this.email = email;
         this.cel = cel;
 
@@ -49,9 +49,15 @@ public class Client {
         this.cel = cel;
     }
 
+    public void valLogin(String nome, String senha){
+        if(nome != getNome() || senha != getSenha()){
+            System.out.print("Login ou senha incorreto!!");
+        }
+    }
+
 
     @Override
     public String toString() {
-        return getNome() + ", "+ getSenha()+", "+getEmail()+", "+getCel();
+        return getNome() +", "+getEmail()+", "+getCel();
     }
 }
