@@ -1,6 +1,8 @@
 package application;
 
-import model.entities.Client;
+import model.entities.Cliente;
+import model.entities.Lojista;
+import model.entities.Produtos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +14,22 @@ public class Program {
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-        List<Client> clients = new ArrayList<>();
+        String nomeP = "pao";
+        double valorP = 10.00;
+        int quantP = 2;
+
+        Produtos p = new Produtos(nomeP,valorP,quantP);
+        Produtos p1 = new Produtos("refri",5.00,1);
 
         String nome = "Lenilson";
         String senha = "1234";
         String email = "lenilson@gmail.com";
         String cel = "27-996293991";
+        Cliente c = new Cliente(p1.getNomeP(),p1.getValorP(),p1.getQuantidadeP(),nome,senha,email,cel);
+        Lojista lojista = new Lojista(c.getNomeP(),c.getValorP(),c.getQuantidadeP(),c.getNome(), c.getSenha(), c.getEmail(),c.getCel(),"1234567","Lanchonete","1234");
 
-        Client cliente = new Client(nome, senha, email, cel);
-        clients.add(cliente);
-        String nome1 = "Lenilson";
-        String senha1 = "1235";
-
-        cliente.valLogin(nome1,senha1);
-
+        c.valLogin();
+        lojista.valLoginLojista();
 
 
         sc.close();
