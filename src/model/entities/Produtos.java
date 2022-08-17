@@ -11,6 +11,10 @@ public class Produtos {
     public Produtos() {
     }
 
+    public Produtos(String nomeP, Double valorP) {
+        this.nomeP = nomeP;
+        this.valorP = valorP;
+    }
 
     public Produtos(String nome, Double valor, Integer quantidade) {
         this.nomeP = nome;
@@ -38,9 +42,19 @@ public class Produtos {
         return quantidadeP;
     }
 
+    public void setQuantidadeP(Integer quantidadeP) {
+        this.quantidadeP = quantidadeP;
+    }
+
     public double ValTotalProdudo(double valor, int quantidade) {
         return getQuantidadeP() * getValorP();
     }
 
+    @Override
+    public String toString() {
+        return "Produtos{" +
+                "nomeP='" + nomeP + '\'' +
+                ", valorP=" + valorP +
+                '}';
+    }
 }
-
