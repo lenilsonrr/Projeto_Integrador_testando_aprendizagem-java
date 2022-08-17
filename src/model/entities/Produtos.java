@@ -1,7 +1,6 @@
 package model.entities;
 
-import java.util.Random;
-import java.util.Scanner;
+
 
 public class Produtos {
     private String nomeP;
@@ -50,11 +49,4 @@ public class Produtos {
         return getQuantidadeP() * getValorP();
     }
 
-    @Override
-    public String toString() {
-        return "Produtos{" +
-                "nomeP='" + nomeP + '\'' +
-                ", valorP=" + valorP +
-                '}';
-    }
 }

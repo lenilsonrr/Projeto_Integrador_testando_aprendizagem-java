@@ -44,20 +44,17 @@ public class Cliente {
         this.senha = senha;
     }
 
-    public boolean valLogin() {
+    public void valLogin() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite seu login e senha para fazer suas compras: ");
         String nome = sc.nextLine();
         String senha = sc.nextLine();
         if (getNome().equals(nome) && getSenha().equals(senha)) {
             System.out.println("Login efetuado! ");
-            return true;
         } else {
             System.out.println("Login ou senha incorreto!!");
             System.out.println("Tente de novo: ");
             valLogin();
         }
-        return false;
     }
-
 }

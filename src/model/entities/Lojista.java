@@ -99,7 +99,7 @@ public class Lojista extends Produtos {
 
         System.out.println("Cliente: " + getCliente().getNome());
         for (Produtos p : getProdutos()){
-            System.out.println("Pedido: "+p.getNomeP()+" , "+p.getValorP());
+            System.out.println("Pedido: "+p.getNomeP()+" , "+String.format("%.2f",p.getValorP()));
         }
     }
 
