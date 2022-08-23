@@ -2,6 +2,8 @@ package application;
 
 import model.entities.Cliente;
 import model.entities.Lojista;
+import model.entities.Pedidos;
+import model.entities.Produtos;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,15 +14,19 @@ public class Program {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
-        Cliente cleinte = new Cliente("Flavia","1234");
-        cleinte.valLogin();
+        Cliente cliente = new Cliente();
+        cliente.fazendocadastroCliente();
+        cliente.valLogin();
 
-        Lojista lanchonete = new Lojista("Delicias", "1234");
+        Lojista lanchonete = new Lojista();
+        lanchonete.fazendocadastro();
         lanchonete.valLoginLojista();
-        lanchonete.setCliente(cleinte);
         lanchonete.setProdutos(lanchonete.addProdutosInEstoque());
-        lanchonete.mostraPedido(lanchonete);
-
-        sc.close();
+        lanchonete.setCliente(cliente);
+        lanchonete.mostraEstoque(lanchonete);
+        lanchonete.getCliente().setPedidos(lanchonete.getCliente().fazerPedido(lanchonete));
+        lanchonete.baixaEstoque(lanchonete.getProdutosLojista(), lanchonete.getCliente().getPedidos());
+        lanchonete.mostraEstoque(lanchonete);
+        lanchonete.getCliente().pedidoCliente(lanchonete,lanchonete.getCliente());
     }
 }

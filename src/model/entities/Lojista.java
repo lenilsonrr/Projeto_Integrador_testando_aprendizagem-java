@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Lojista extends Produtos {
-    private String nomeFantasia;
-    private String senha;
+public class Lojista {
+    private String nomeLoja;
+    private String senhaLoja;
 
     private Cliente cliente;
 
@@ -16,31 +16,31 @@ public class Lojista extends Produtos {
     }
 
     public Lojista(String nomeFantasia, String senha) {
-        this.nomeFantasia = nomeFantasia;
-        this.senha = senha;
+        this.nomeLoja = nomeFantasia;
+        this.senhaLoja = senha;
     }
 
-    public Lojista(String nomeFantasia, String senha, Cliente cliente, List<Produtos> produtos) {
-        this.nomeFantasia = nomeFantasia;
-        this.senha = senha;
+    public Lojista(String nomeLoja, String senhaLoja, Cliente cliente, List<Produtos> produtos) {
+        this.nomeLoja = nomeLoja;
+        this.senhaLoja = senhaLoja;
         this.cliente = cliente;
         this.produtos = produtos;
     }
 
-    public String getNomeFantasia() {
-        return nomeFantasia;
+    public String getNomeLoja() {
+        return nomeLoja;
     }
 
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
+    public void setNomeLoja(String nomeLoja) {
+        this.nomeLoja = nomeLoja;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getSenhaLoja() {
+        return senhaLoja;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenha(String senhaLoja) {
+        this.senhaLoja = senhaLoja;
     }
 
     public Cliente getCliente() {
@@ -51,7 +51,7 @@ public class Lojista extends Produtos {
         this.cliente = cliente;
     }
 
-    public List<Produtos> getProdutos() {
+    public List<Produtos> getProdutosLojista() {
         return produtos;
     }
 
@@ -59,20 +59,33 @@ public class Lojista extends Produtos {
         this.produtos = produtos;
     }
 
-    public boolean valLoginLojista() {
+    public Lojista fazendocadastro() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite seu login e senha para abrir sua lanchonete: ");
+        System.out.print("Qual o nome da sua loja: ");
+        setNomeLoja(sc.nextLine());
+        System.out.print("Qual a sua senha: ");
+        setSenha(sc.nextLine());
+        return new Lojista(getNomeLoja(), getSenhaLoja());
+    }
+
+    public void valLoginLojista() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("############ Para validar seus dados digite login e senha corretos ########## ");
+        System.out.println();
+        System.out.print("Digite seu login: ");
         String nomeL = sc.nextLine();
+        System.out.print("Digite a sua senha: ");
         String senhaL = sc.nextLine();
-        if (getNomeFantasia().equals(nomeL) && getSenha().equals(senhaL)) {
+        System.out.println();
+        if (getNomeLoja().equals(nomeL) && getSenhaLoja().equals(senhaL)) {
             System.out.println("Login correto!!");
-            return true;
+            System.out.println();
         } else {
             System.out.println("Login ou senha incorreto!!");
             System.out.println("Tente de novo: ");
+            System.out.println();
             valLoginLojista();
         }
-        return false;
     }
 
     public List<Produtos> addProdutosInEstoque() {
@@ -95,13 +108,33 @@ public class Lojista extends Produtos {
         return produtosLanchonete;
     }
 
-    public void mostraPedido(Lojista lojista) {
-
-        System.out.println("Cliente: " + getCliente().getNome());
-        for (Produtos p : getProdutos()){
-            System.out.println("Pedido: "+p.getNomeP()+" , "+String.format("%.2f",p.getValorP()));
+    public void mostraEstoque(Lojista lojista) {
+        System.out.println();
+        System.out.println("****** Produtos disponiveis *******");
+        for (Produtos p : getProdutosLojista()) {
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo(p.getValorP(), p.getQuantidadeP())));
         }
     }
 
+    public Integer baixaEstoque(List<Produtos> produtos, List<Pedidos> pedidos) {
+        int soma = 0;
+        for (Produtos p : getProdutosLojista()) {
+            for (Pedidos pe : getCliente().getPedidos()) {
+                if (pe.getNomePedido().equals(p.getNomeP())) {
+                    soma = p.getQuantidadeP() - pe.getQuantidadePedido();
+                    p.setQuantidadeP(soma);
+                }
+            }
+        }
+        return soma;
+    }
 
+    public void mostraNovoEstoque(Lojista lojista) {
+        System.out.println();
+        System.out.println("****** Produtos disponiveis *******");
+        for (Produtos p : getProdutosLojista()) {
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo(p.getValorP(), p.getQuantidadeP())));
+        }
+        System.out.println();
+    }
 }

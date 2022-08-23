@@ -1,7 +1,6 @@
 package model.entities;
 
 
-
 public class Produtos {
     private String nomeP;
     private Double valorP;
@@ -13,6 +12,11 @@ public class Produtos {
     public Produtos(String nomeP, Double valorP) {
         this.nomeP = nomeP;
         this.valorP = valorP;
+    }
+
+    public Produtos(String nomeP, Integer quantidadeP) {
+        this.nomeP = nomeP;
+        this.quantidadeP = quantidadeP;
     }
 
     public Produtos(String nome, Double valor, Integer quantidade) {
@@ -48,5 +52,4 @@ public class Produtos {
     public double ValTotalProdudo(double valor, int quantidade) {
         return getQuantidadeP() * getValorP();
     }
-
 }
