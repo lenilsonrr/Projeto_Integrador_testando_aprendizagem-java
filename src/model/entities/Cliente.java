@@ -112,12 +112,6 @@ public class Cliente extends Lojista {
             System.out.print("Digite a quantidade: ");
             int quantidadeCP = sc.nextInt();
             sc.nextLine();
-            //  char resp = 0;
-            //System.out.println("Deseja finalizar seu pedido: s-(sim) n-(nao)");
-            // resp = sc.next().charAt(0);
-            //if(resp=='n'){
-
-            // }
             pedidoCliente.add(new Pedidos(nomeCP, quantidadeCP));
             }
             return pedidoCliente;
