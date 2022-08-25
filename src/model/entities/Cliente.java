@@ -62,7 +62,7 @@ public class Cliente extends Lojista {
     public Cliente fazendocadastroCliente() {
         Scanner sc = new Scanner(System.in);
         System.out.println();
-        System.out.println("*** Bem vindo ao Agility de compras e retiradas rapidas ***");
+        System.out.println("*** Bem vindo ao Agility sistema de compras e retiradas rapidas ***");
         System.out.println("____ Para fazer compras basta cadastrar login e senha ______");
         System.out.println();
         System.out.print("Qual o nome do usuario: ");
