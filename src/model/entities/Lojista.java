@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Lojista {
+public class Lojista extends Produtos {
     private String nomeLoja;
     private String senhaLoja;
 
     private Cliente cliente;
 
     private List<Produtos> produtos = new ArrayList<>();
+
+    private List<Cliente> clientes = new ArrayList<>();
 
     public Lojista() {
     }
@@ -20,11 +22,12 @@ public class Lojista {
         this.senhaLoja = senha;
     }
 
-    public Lojista(String nomeLoja, String senhaLoja, Cliente cliente, List<Produtos> produtos) {
+    public Lojista(String nomeLoja, String senhaLoja, Cliente cliente, List<Produtos> produtos, List<Cliente> clientes) {
         this.nomeLoja = nomeLoja;
         this.senhaLoja = senhaLoja;
         this.cliente = cliente;
         this.produtos = produtos;
+        this.clientes = clientes;
     }
 
     public String getNomeLoja() {
@@ -59,26 +62,41 @@ public class Lojista {
         this.produtos = produtos;
     }
 
-    public Lojista fazendocadastro() {
+    public List<Produtos> getProdutos() {
+        return produtos;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void fazendoCadastro() {
         Scanner sc = new Scanner(System.in);
+        System.out.println();
+        System.out.println("*** Bem vindo ao Agility sistema de compras e retiradas rapidas ***");
+        System.out.println("____ Para cadastrar seus produtos e realizar vendas basta cadastrar login e senha ______");
+        System.out.println();
         System.out.print("Qual o nome da sua loja: ");
         setNomeLoja(sc.nextLine());
         System.out.print("Qual a sua senha: ");
         setSenha(sc.nextLine());
-        return new Lojista(getNomeLoja(), getSenhaLoja());
+        new Lojista(getNomeLoja(), getSenhaLoja());
     }
 
     public void valLoginLojista() {
         Scanner sc = new Scanner(System.in);
         System.out.println("############ Para validar seus dados digite login e senha corretos ########## ");
-        System.out.println();
         System.out.print("Digite seu login: ");
         String nomeL = sc.nextLine();
         System.out.print("Digite a sua senha: ");
         String senhaL = sc.nextLine();
         System.out.println();
         if (getNomeLoja().equals(nomeL) && getSenhaLoja().equals(senhaL)) {
-            System.out.println("Login correto!!");
+            System.out.println("Login efetuado com sucesso!");
             System.out.println();
         } else {
             System.out.println("Login ou senha incorreto!!");
@@ -112,29 +130,44 @@ public class Lojista {
         System.out.println();
         System.out.println("****** Produtos disponiveis *******");
         for (Produtos p : getProdutosLojista()) {
-            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo(p.getValorP(), p.getQuantidadeP())));
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo()));
         }
+        System.out.println("***********************************");
     }
 
-    public Integer baixaEstoque(List<Produtos> produtos, List<Pedidos> pedidos) {
-        int soma = 0;
+    public void fazerPedido() {
+        Scanner sc = new Scanner(System.in);
+
         for (Produtos p : getProdutosLojista()) {
-            for (Pedidos pe : getCliente().getPedidos()) {
-                if (pe.getNomePedido().equals(p.getNomeP())) {
-                    soma = p.getQuantidadeP() - pe.getQuantidadePedido();
+            System.out.print("Digite o nome do produto desejado: ");
+            String nomeCP = sc.nextLine();
+
+            System.out.print("Digite a quantidade: ");
+            int quantidadeCP = sc.nextInt();
+            sc.nextLine();
+            if (nomeCP.equals(p.getNomeP())&&quantidadeCP<p.getQuantidadeP()) {
+                double totalAPagar = quantidadeCP * p.getValorP();
+                cliente.addPedido(new Pedidos(nomeCP, quantidadeCP, totalAPagar));
+                int soma = 0;
+                if (nomeCP.equals(p.getNomeP())) {
+                    soma = p.getQuantidadeP() - quantidadeCP;
                     p.setQuantidadeP(soma);
                 }
+            } else {
+                System.out.println("Nome ou a quantidade do produto diferente das do estoque , tente denovo!");
+                fazerPedido();
             }
         }
-        return soma;
     }
 
-    public void mostraNovoEstoque(Lojista lojista) {
-        System.out.println();
-        System.out.println("****** Produtos disponiveis *******");
-        for (Produtos p : getProdutosLojista()) {
-            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo(p.getValorP(), p.getQuantidadeP())));
+    public void mostrarPedido() {
+        double soma = 0;
+        System.out.println(getCliente().getNome());
+        for (Pedidos p : getCliente().getPedidos()) {
+            System.out.println(p);
+            soma += p.getValorTotal();
         }
-        System.out.println();
+        System.out.println("Total a pagar R$: " + String.format("%.2f", soma));
     }
+
 }

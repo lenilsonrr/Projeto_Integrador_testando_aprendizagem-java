@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Cliente extends Lojista {
+public class Cliente {
 
     private String nome;
     private String senha;
@@ -13,7 +13,7 @@ public class Cliente extends Lojista {
     private List<Pedidos> pedidos = new ArrayList<>();
 
     public Cliente() {
-        super();
+        ;
     }
 
     public Cliente(String nome, String senha) {
@@ -23,14 +23,8 @@ public class Cliente extends Lojista {
     }
 
     public Cliente(String nome, String senha, List<Pedidos> pedidos) {
-        super();
         this.nome = nome;
         this.senha = senha;
-        this.pedidos = pedidos;
-    }
-
-    public Cliente(String nomeLoja, String senhaLoja, Cliente cliente, List<Produtos> produtos, List<Pedidos> pedidos) {
-        super(nomeLoja, senhaLoja, cliente, produtos);
         this.pedidos = pedidos;
     }
 
@@ -47,19 +41,24 @@ public class Cliente extends Lojista {
         return senha;
     }
 
-    public List<Pedidos> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedidos> pedidos) {
-        this.pedidos = pedidos;
-    }
-
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public Cliente fazendocadastroCliente() {
+    public List<Pedidos> getPedidos() {
+        return pedidos;
+    }
+
+    public void addPedido(Pedidos pedido) {
+        getPedidos().add(pedido);
+    }
+
+    public void removerPedido(Pedidos pedido) {
+        getPedidos().remove(pedido);
+    }
+
+
+    public void fazendocadastroCliente() {
         Scanner sc = new Scanner(System.in);
         System.out.println();
         System.out.println("*** Bem vindo ao Agility sistema de compras e retiradas rapidas ***");
@@ -69,7 +68,7 @@ public class Cliente extends Lojista {
         setNome(sc.nextLine());
         System.out.print("Qual a sua senha: ");
         setSenha(sc.nextLine());
-        return new Cliente(getNome(),getSenha());
+        new Cliente(getNome(), getSenha());
     }
 
     public void valLogin() {
@@ -81,7 +80,7 @@ public class Cliente extends Lojista {
         String senha = sc.nextLine();
         System.out.println();
         if (getNome().equals(nome) && getSenha().equals(senha)) {
-            System.out.println("Login efetuado! ");
+            System.out.println("Login efetuado com sucesso! ");
             System.out.println();
         } else {
             System.out.println("Login ou senha incorreto!!");
@@ -91,37 +90,17 @@ public class Cliente extends Lojista {
         }
     }
 
-    @Override
     public void mostraEstoque(Lojista lojista) {
         System.out.println();
         System.out.println("****** Produtos disponiveis *******");
-        for (Produtos p : getProdutosLojista()) {
-            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: "+String.format("%.2f",p.ValTotalProdudo(p.getValorP(), p.getQuantidadeP())));
+        for (Produtos p : lojista.getProdutosLojista()) {
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo()));
         }
         System.out.println();
     }
 
-    public List<Pedidos> fazerPedido(Lojista lojista) {
-        Scanner sc = new Scanner(System.in);
-
-        List<Pedidos> pedidoCliente = new ArrayList<>();
-
-        for (int i = 0; i < lojista.getProdutosLojista().size(); i++) {
-            System.out.print("Digite o nome do " + (i + 1) + "ª produto desejado: ");
-            String nomeCP = sc.nextLine();
-            System.out.print("Digite a quantidade: ");
-            int quantidadeCP = sc.nextInt();
-            sc.nextLine();
-            pedidoCliente.add(new Pedidos(nomeCP, quantidadeCP));
-            }
-            return pedidoCliente;
-    }
-
-    public void pedidoCliente(Lojista lojista,Cliente cliente ){
-        for (Pedidos p : cliente.getPedidos()) {
-            for (Produtos p1 : lojista.getProdutosLojista()) {
-                System.out.println(getNome() + ", " + p.getNomePedido() + ", " + p.getQuantidadePedido() + ", R$: " + String.format("%.2f", p.getQuantidadePedido() * p1.getValorP()));
-
-            }     }
+    @Override
+    public String toString() {
+        return nome  ;
     }
 }
