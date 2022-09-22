@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Lojista extends Produtos {
+public class Lojista {
+    private Scanner sc = new Scanner(System.in);
     private String nomeLoja;
     private String senhaLoja;
 
@@ -88,7 +89,6 @@ public class Lojista extends Produtos {
     }
 
     public void valLoginLojista() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("############ Para validar seus dados digite login e senha corretos ########## ");
         System.out.print("Digite seu login: ");
         String nomeL = sc.nextLine();
@@ -106,12 +106,10 @@ public class Lojista extends Produtos {
         }
     }
 
-    public List<Produtos> addProdutosInEstoque() {
-        Scanner sc = new Scanner(System.in);
+    public void addProdutosInEstoque() {
         System.out.print("Quantos produtos deseja adicionar: ");
         int n = sc.nextInt();
         sc.nextLine();
-        List<Produtos> produtosLanchonete = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             System.out.print("Digite o nome do " + (i + 1) + "ª produto: ");
@@ -121,22 +119,11 @@ public class Lojista extends Produtos {
             System.out.print("Digite a quantidade do " + (i + 1) + "ª produto: ");
             int quantidadeP = sc.nextInt();
             sc.nextLine();
-            produtosLanchonete.add(new Produtos(nomeP, valorP, quantidadeP));
+            getProdutos().add(new Produtos(nomeP, valorP, quantidadeP));
         }
-        return produtosLanchonete;
-    }
-
-    public void mostraEstoque(Lojista lojista) {
-        System.out.println();
-        System.out.println("****** Produtos disponiveis *******");
-        for (Produtos p : getProdutosLojista()) {
-            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo()));
-        }
-        System.out.println("***********************************");
     }
 
     public void fazerPedido() {
-        Scanner sc = new Scanner(System.in);
 
         for (Produtos p : getProdutosLojista()) {
             System.out.print("Digite o nome do produto desejado: ");
@@ -145,7 +132,7 @@ public class Lojista extends Produtos {
             System.out.print("Digite a quantidade: ");
             int quantidadeCP = sc.nextInt();
             sc.nextLine();
-            if (nomeCP.equals(p.getNomeP())&&quantidadeCP<p.getQuantidadeP()) {
+            if (nomeCP.equals(p.getNomeP()) && quantidadeCP < p.getQuantidadeP()) {
                 double totalAPagar = quantidadeCP * p.getValorP();
                 cliente.addPedido(new Pedidos(nomeCP, quantidadeCP, totalAPagar));
                 int soma = 0;
@@ -170,4 +157,22 @@ public class Lojista extends Produtos {
         System.out.println("Total a pagar R$: " + String.format("%.2f", soma));
     }
 
+    public void lojaAberta() {
+        System.out.println("Loja " + getNomeLoja() + " - Aberta");
+        System.out.println("1 - Para adicionar produtos:\n2 - Remover produtos:\n3 - ver pedidos:\n 4 - ");
+        int n1 = sc.nextInt();
+        switch (n1) {
+            case 1: {
+                addProdutosInEstoque();
+            }
+        }
+    }
+    public void mostraEstoque() {
+        System.out.println();
+        System.out.println("****** Produtos disponiveis *******");
+        for (Produtos p : getProdutosLojista()) {
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.valTotalProdudo()));
+        }
+        System.out.println("***********************************");
+    }
 }

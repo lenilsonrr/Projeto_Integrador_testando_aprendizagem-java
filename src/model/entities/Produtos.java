@@ -49,7 +49,7 @@ public class Produtos  {
         this.quantidadeP = quantidadeP;
     }
 
-    public double ValTotalProdudo() {
+    public double valTotalProdudo() {
         return getQuantidadeP() * getValorP();
     }
 }

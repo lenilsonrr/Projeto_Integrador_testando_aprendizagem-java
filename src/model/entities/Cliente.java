@@ -94,7 +94,9 @@ public class Cliente {
         System.out.println();
         System.out.println("****** Produtos disponiveis *******");
         for (Produtos p : lojista.getProdutosLojista()) {
-            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.ValTotalProdudo()));
+
+            System.out.println(p.getNomeP() + ", R$: " + String.format("%.2f", p.getValorP()) + ", " + p.getQuantidadeP() + " UND, R$: " + String.format("%.2f", p.valTotalProdudo()));
+
         }
         System.out.println();
     }
